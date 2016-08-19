@@ -1,0 +1,24 @@
+//
+//  Chat.pch
+//  EvenChat
+//
+//  Created by Even on 16/8/17.
+//  Copyright © 2016年 Cube. All rights reserved.
+//
+
+#ifndef Chat_pch
+#define Chat_pch
+
+#import <UIKit/UIKit.h>
+#import "XMPPFramework.h"
+#import "XMPPManager.h"
+#import "Common.m"
+
+#define XMPP_TRANSFER_IMG 1
+#define XMPP_TRANSFER_MP3 2
+#define XMPP_TRANSFER_MP4 3
+#define XMPP_TRANSFER_FILE 4
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* Chat_pch */
