@@ -9,7 +9,7 @@
 #import "ChatViewController.h"
 #import "EvenImageView.h"
 
-@interface ChatViewController ()<UITableViewDelegate,UITableViewDataSource,NSFetchedResultsControllerDelegate,UITextFieldDelegate>
+@interface ChatViewController ()<UITableViewDataSource,UITableViewDelegate,NSFetchedResultsControllerDelegate,UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,XMPPOutgoingFileTransferDelegate>
 
 //显示对话的tableView
 @property (weak, nonatomic) IBOutlet UITableView *MessageTableView;
@@ -34,6 +34,7 @@
     //  设置让tableView根据autolayout自动计算行高
     self.MessageTableView.rowHeight = UITableViewAutomaticDimension;
     
+    
     //查询刷新数据
     [self refreshData];
 
@@ -48,12 +49,60 @@
     //刷新
     [self.MessageTableView reloadData];
     
-    //滚动到最下面一行(自动上移)
-    if (self.messages.count > 0)
-    {
+}
 
-        [self.MessageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    }
+
+// 点击按钮,发送图片
+- (IBAction)sendImageBtnClicked:(id)sender {
+    // 访问相册
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    // 设置来源
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    // 设置代理
+    picker.delegate = self;
+    
+    //    picker.allowsEditing = YES;
+    // 展示
+    [self presentViewController:picker animated:YES completion:nil];
+    
+}
+/**
+ *  点击相册中的资源后调用的方法
+ *
+ *  @param picker picker
+ *  @param info   点击的相册或者视频的相关信息
+ */
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
+{
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    
+    //    // 发送文件
+    //    NSError *error;
+    //    [[CZXMPPManager shareInstance].xmppOutgoingFile sendData:UIImageJPEGRepresentation(image, 0.5) named:[[CZXMPPManager shareInstance].xmppStream generateUUID] toRecipient:[XMPPJID jidWithUser:self.contactJID.user domain:self.contactJID.domain resource:@"whitcast的iMac"] description:nil error:&error];
+    //
+    //    [[CZXMPPManager shareInstance].xmppOutgoingFile addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    //
+    //    NSLog(@"%@",error);
+    //
+    // 发送一个离线消息的一种方式
+    NSData *data = UIImageJPEGRepresentation(image, 0.5);
+    
+    NSString *imageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    
+    
+    XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:self.contactJID.bareJID];
+    
+    [message addBody:imageStr];
+    
+    [[XMPPManager shareManager].xmppStream sendElement:message];
+    //
+    // 另一种离线文件的发送方式
+    // 找一个代理服务器,先把这个文件发送给代理服务器,让代理服务器保存,如果对方上线,在发送给对方.
+    
+    
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    
 }
 
 
@@ -71,6 +120,19 @@
     textField.text = @"";
     
     return YES;
+}
+
+#pragma mark - XMPPOutgoingFileTransferDelegate
+//发送失败
+- (void)xmppOutgoingFileTransfer:(XMPPOutgoingFileTransfer *)sender
+                didFailWithError:(NSError *)error;
+{
+    NSLog(@"发送失败%@",error);
+}
+// 发送成功
+- (void)xmppOutgoingFileTransferDidSucceed:(XMPPOutgoingFileTransfer *)sender;
+{
+    NSLog(@"发送成功");
 }
 
 

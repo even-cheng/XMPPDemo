@@ -8,6 +8,7 @@
 
 #import "RecentTableViewController.h"
 #import "ChatViewController.h"
+#import "GroupchatViewController.h"
 
 @interface RecentTableViewController ()<NSFetchedResultsControllerDelegate>
 
@@ -38,12 +39,52 @@
     [self.tableView reloadData];
 }
 
+// 点击后加入聊天群
+- (IBAction)addRoomBtnClicked:(id)sender {
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"聊天室" message:@"添加聊天室" preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        
+    }];
+    
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *textField = alertController.textFields.lastObject;
+        
+        [[XMPPRoomManager shareInstance] joinRoomWithJID:[XMPPJID jidWithUser:textField.text domain:@"conference.even.chat" resource:nil] andNickName:@"zhangsan"];
+    }];
+    
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    
+    [alertController addAction:action1];
+    [alertController addAction:action2];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+    
+}
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    ChatViewController *chatVC = segue.destinationViewController;
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-    chatVC.contactJID = [self.recentPeople[indexPath.row] bareJid];
+
+    if ([segue.identifier isEqualToString:@"groupchat"]) {
+        // 群聊
+        GroupchatViewController *groupChatVC = segue.destinationViewController;
+        groupChatVC.groupChatJID = [self.recentPeople[indexPath.row] bareJid];
+        
+        
+    } else {
+        // 单聊
+        ChatViewController *chatVC = segue.destinationViewController;
+        
+        chatVC.contactJID = [self.recentPeople[indexPath.row] bareJid];
+    }
 }
 
 /**
@@ -85,6 +126,21 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    NSString *domin = [self.recentPeople[indexPath.row] bareJid].domain;
+    
+    if ([domin hasPrefix:@"even.chat"]) {
+        // 单聊
+        [self performSegueWithIdentifier:@"chat" sender:nil];
+    } else {
+        // 群聊
+        [self performSegueWithIdentifier:@"groupchat" sender:nil];
+        
+    }
+}
+
 
 - (NSFetchedResultsController *)fetchResultController
 {
@@ -93,10 +149,8 @@
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"XMPPMessageArchiving_Contact_CoreDataObject" inManagedObjectContext:[XMPPMessageArchivingCoreDataStorage sharedInstance].mainThreadManagedObjectContext];
         [fetchRequest setEntity:entity];
-        //        // 谓词
-        //        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"<#format string#>", <#arguments#>];
-        //        [fetchRequest setPredicate:predicate];
-        // paixu
+
+        
         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"mostRecentMessageTimestamp" ascending:YES];
         [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
         
@@ -117,48 +171,8 @@
 }
 
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

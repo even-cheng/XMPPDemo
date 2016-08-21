@@ -161,6 +161,8 @@
 		8604FD021D648C7F00A0FF7D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8604FD011D648C7F00A0FF7D /* ViewController.m */; };
 		8604FD051D648C7F00A0FF7D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8604FD031D648C7F00A0FF7D /* Main.storyboard */; };
 		8604FD0A1D648C7F00A0FF7D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8604FD081D648C7F00A0FF7D /* LaunchScreen.storyboard */; };
+		866BA9E81D688ABA000FF079 /* XMPPRoomManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 866BA9E71D688ABA000FF079 /* XMPPRoomManager.m */; };
+		866BA9EB1D688C1C000FF079 /* GroupchatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 866BA9EA1D688C1C000FF079 /* GroupchatViewController.m */; };
 		86ACF03D1D66E1C500D3842F /* ProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86ACF03C1D66E1C500D3842F /* ProfileTableViewController.m */; };
 		86ACF0401D66E1D300D3842F /* InfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86ACF03F1D66E1D300D3842F /* InfoTableViewController.m */; };
 		86ACF0431D66E1E900D3842F /* EditTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86ACF0421D66E1E900D3842F /* EditTableViewController.m */; };
@@ -483,6 +485,10 @@
 		8604FD041D648C7F00A0FF7D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8604FD091D648C7F00A0FF7D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8604FD0B1D648C7F00A0FF7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
+		866BA9E61D688ABA000FF079 /* XMPPRoomManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPRoomManager.h; sourceTree = "<group>"; };
+		866BA9E71D688ABA000FF079 /* XMPPRoomManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPRoomManager.m; sourceTree = "<group>"; };
+		866BA9E91D688C1C000FF079 /* GroupchatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupchatViewController.h; sourceTree = "<group>"; };
+		866BA9EA1D688C1C000FF079 /* GroupchatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupchatViewController.m; sourceTree = "<group>"; };
 		86ACF03B1D66E1C500D3842F /* ProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileTableViewController.h; sourceTree = "<group>"; };
 		86ACF03C1D66E1C500D3842F /* ProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileTableViewController.m; sourceTree = "<group>"; };
 		86ACF03E1D66E1D300D3842F /* InfoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoTableViewController.h; sourceTree = "<group>"; };
@@ -1862,6 +1868,8 @@
 			children = (
 				860404151D64BBFF00A0FF7D /* ChatViewController.h */,
 				860404161D64BBFF00A0FF7D /* ChatViewController.m */,
+				866BA9E91D688C1C000FF079 /* GroupchatViewController.h */,
+				866BA9EA1D688C1C000FF079 /* GroupchatViewController.m */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1900,6 +1908,8 @@
 			children = (
 				860404041D648FFA00A0FF7D /* XMPPManager.h */,
 				860404051D648FFA00A0FF7D /* XMPPManager.m */,
+				866BA9E61D688ABA000FF079 /* XMPPRoomManager.h */,
+				866BA9E71D688ABA000FF079 /* XMPPRoomManager.m */,
 				86C159441D66F9E000433940 /* EvenImageView.h */,
 				86C159451D66F9E000433940 /* EvenImageView.m */,
 			);
@@ -2129,6 +2139,7 @@
 				860403AA1D648D8400A0FF7D /* XMPPRoomMemoryStorage.m in Sources */,
 				860403C31D648D8400A0FF7D /* XMPPMessage+XEP_0066.m in Sources */,
 				86ACF0431D66E1E900D3842F /* EditTableViewController.m in Sources */,
+				866BA9EB1D688C1C000FF079 /* GroupchatViewController.m in Sources */,
 				860403F01D648D8400A0FF7D /* XMPPSRVResolver.m in Sources */,
 				860404001D648D8400A0FF7D /* DDXMLNode.m in Sources */,
 				860403CB1D648D8400A0FF7D /* XMPPCapabilities.xcdatamodel in Sources */,
@@ -2200,6 +2211,7 @@
 				8604037B1D648D8400A0FF7D /* XMPPSCRAMSHA1Authentication.m in Sources */,
 				860403E21D648D8400A0FF7D /* NSXMLElement+XEP_0203.m in Sources */,
 				860403841D648D8400A0FF7D /* XMPPJID.m in Sources */,
+				866BA9E81D688ABA000FF079 /* XMPPRoomManager.m in Sources */,
 				8604038B1D648D8400A0FF7D /* XMPPCoreDataStorage.m in Sources */,
 				860403E61D648D8400A0FF7D /* XMPPMessage+XEP_0280.m in Sources */,
 				860403C91D648D8400A0FF7D /* XMPPTransports.m in Sources */,

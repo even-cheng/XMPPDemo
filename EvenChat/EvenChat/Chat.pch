@@ -13,6 +13,7 @@
 #import "XMPPFramework.h"
 #import "XMPPManager.h"
 #import "Common.m"
+#import "XMPPRoomManager.h"
 
 #define XMPP_TRANSFER_IMG 1
 #define XMPP_TRANSFER_MP3 2

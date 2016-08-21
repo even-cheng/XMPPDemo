@@ -47,12 +47,13 @@
 //#import "XMPPIQ+JabberRPCResponse.h"
 //
 //#import "XMPPPrivacy.h"
-//
-//#import "XMPPMUC.h"
-//#import "XMPPRoom.h"
-//#import "XMPPRoomMemoryStorage.h"
-//#import "XMPPRoomCoreDataStorage.h"
-//#import "XMPPRoomHybridStorage.h"
+
+//聊天室模块
+#import "XMPPMUC.h"
+#import "XMPPRoom.h"
+#import "XMPPRoomMemoryStorage.h"
+#import "XMPPRoomCoreDataStorage.h"
+#import "XMPPRoomHybridStorage.h"
 
 //电子名片模块
 #import "XMPPvCardTempModule.h"

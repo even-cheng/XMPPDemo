@@ -23,7 +23,7 @@
     [super viewDidLoad];
 
     //登录
-    [[XMPPManager shareManager] loginWithJID:[XMPPJID jidWithUser:@"lisi" domain:@"even.chat" resource:@"lisi"] andPassword:@"123"];
+    [[XMPPManager shareManager] loginWithJID:[XMPPJID jidWithUser:@"wang" domain:@"even.chat" resource:@"wang"] andPassword:@"123"];
 
     //注册
 //    [[XMPPManager shareManager] registerWithJID:[XMPPJID jidWithUser:@"张三丰" domain:@"even.chat" resource:@"丰"] andPassword:@"feng"];
